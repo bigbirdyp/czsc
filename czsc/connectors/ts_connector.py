@@ -299,13 +299,16 @@ def get_raw_bars(symbol, freq, sdt, edt, fq="后复权", raw_bar=True):
         freq = freq.replace("分钟", "min")
         bars = pro_bar_minutes(ts_code, sdt=sdt, edt=edt, freq=freq, asset=asset, adj=adj)
         if raw_bar:
-            bars = format_kline(bars, Freq(freq))
+            bars = format_kline(bars, Freq.F1)
 
     else:
         import tushare as ts
         _map = {"日线": "D", "周线": "W", "月线": "M"}
-        freq = _map[freq]
-        bars = ts.pro_bar(ts_code, start_date=sdt, end_date=edt, freq=freq, asset=asset, adj=adj)
+        
+        freq_str = _map[freq]
+        bars = ts.pro_bar(ts_code, start_date=sdt, end_date=edt, freq=freq_str, asset=asset, adj=adj)
         if raw_bar:
-            bars = format_kline(bars, Freq(freq))
+            _map = {"日线": Freq.D, "周线": Freq.W, "月线": Freq.M}
+
+            bars = format_kline(bars, _map[freq])
     return bars
