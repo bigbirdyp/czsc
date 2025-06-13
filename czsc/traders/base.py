@@ -301,8 +301,11 @@ def check_signals_acc(bars: List[RawBar], signals_config: List[dict], delta_days
     for bar in tqdm(bars_right, desc=f'signals of {bg.symbol}'):
         ct.update_signals(bar)
 
+        print("signals", signals)
         for signal in signals:
+            print(signal.key)
             html_path = os.path.join(home_path, signal.key)
+            print(html_path)
             os.makedirs(html_path, exist_ok=True)
             if bar.dt - last_dt[signal.key] > timedelta(days=delta_days) and signal.is_match(ct.s):
                 file_html = f"{bar.symbol}_{bar.dt.strftime('%Y%m%d_%H%M')}_{signal.key}_{ct.s[signal.key]}.html"

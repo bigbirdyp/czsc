@@ -296,3 +296,7 @@ from czsc.signals.xls import (
     xl_bar_basis_V240412,
     xl_bar_trend_V240623,
 )
+
+from czsc.signals.yps import (
+    yps_bupiao_V250612,
+)
